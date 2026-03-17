@@ -39,7 +39,7 @@ export function createTodoActions(dispatch) {
                 await deleteTodo(id)
 
                 dispatch({
-                    type:ACTIONS.UPDATE,
+                    type:ACTIONS.DELETE,
                     id
                 })
             } catch (error) {
