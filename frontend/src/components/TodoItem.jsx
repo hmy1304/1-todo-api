@@ -22,8 +22,30 @@ const TodoItem = ({
     }))
   }
 
+  const handleToggle = () => {
+    onUpdate(id, {
+      content : edit.isEdit? edit.content:content,
+      done : !done
+    })
+  }
+
   const handleEdit = () => {
     onChangeEdit("isEdit", true)
+  }
+
+  const handleCancel = () => {
+    setEdit({
+      isEdit:false,
+      content:content
+    })
+  }
+
+  const handleSave = () => {
+    onUpdate(id, {
+      content:edit.content,
+      done:done
+    })
+    onChangeEdit("isEdit", false)
   }
 
 
@@ -33,18 +55,21 @@ const TodoItem = ({
         <div>
           <input type="checkbox"
             checked={done}
-            onChange={() => onUpdate(id)} />
-          <div className="content">{content}</div>
+            onChange={handleToggle} />
+          <input type="text"
+          className='input-content'
+          onChange={(e)=>onChangeEdit("content", e.target.value)} 
+          value={edit.content}/>
           <div className="date">{new Date(date).toLocaleDateString()}</div>
-          <button onClick={handleEdit}>저장</button>
-          <button >취소</button>
+          <button onClick={handleSave}>저장</button>
+          <button onClick={handleCancel}>취소</button>
 
         </div>
       ) : (
         <div>
           <input type="checkbox"
             checked={done}
-            onChange={() => onUpdate(id)} />
+            onChange={handleToggle} />
           <div className="content">{content}</div>
           <div className="date">{new Date(date).toLocaleDateString()}</div>
           <button onClick={handleEdit}>수정</button>
